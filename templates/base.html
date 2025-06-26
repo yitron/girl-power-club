@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Girl Power Club{% endblock %}</title>
+    <!-- Include Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ppg: {
+                            pink: '#FF99CC',    /* Blossom pink */
+                            blue: '#72C8F8',    /* Bubbles blue */
+                            green: '#98D46D',   /* Buttercup green */
+                            purple: '#8E6BB5',  /* Accent purple */
+                            yellow: '#FFF06A',  /* Accent yellow */
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer components {
+            .btn-primary {
+                @apply bg-ppg-pink hover:bg-pink-600 text-white font-bold py-2 px-4 rounded;
+            }
+            .form-input {
+                @apply border-2 border-ppg-blue rounded px-3 py-2 w-full;
+            }
+        }
+    </style>
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <header class="bg-gradient-to-r from-ppg-pink via-ppg-blue to-ppg-green shadow-md">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <img src="{% block logo_path %}/static/club/images/logo.png{% endblock %}" alt="Girl Power Club" class="h-14">
+                <h1 class="text-white text-xl font-bold ml-3">Girl Power Club</h1>
+            </div>
+            <nav>
+                <ul class="flex space-x-4">
+                    <li><a href="{% url 'home' %}" class="text-white hover:text-ppg-yellow font-medium">Home</a></li>
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'profile' %}" class="text-white hover:text-ppg-yellow font-medium">My Profile</a></li>
+                        <li><a href="{% url 'logout' %}" class="text-white hover:text-ppg-yellow font-medium">Logout</a></li>
+                    {% else %}
+                        <li><a href="{% url 'login' %}" class="text-white hover:text-ppg-yellow font-medium">Login</a></li>
+                        <li><a href="{% url 'join' %}" class="text-white hover:text-ppg-yellow font-medium">Join Club</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        {% if messages %}
+            <div class="mb-6">
+                {% for message in messages %}
+                    <div class="{% if message.tags == 'success' %}bg-ppg-green{% elif message.tags == 'error' %}bg-red-400{% else %}bg-ppg-blue{% endif %} text-white p-4 rounded mb-2">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="bg-ppg-purple text-white py-6">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row md:justify-between">
+                <div class="mb-4 md:mb-0">
+                    <h3 class="font-bold text-lg mb-2">Girl Power Club</h3>
+                    <p>Empowering elementary school girls in Singapore</p>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-2">Contact</h4>
+                    <p>Email: info@girlpowerclub.sg</p>
+                </div>
+            </div>
+            <div class="mt-4 text-center text-sm">
+                <p>&copy; {% now "Y" %} Girl Power Club. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

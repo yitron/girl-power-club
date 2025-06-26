@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block title %}Girl Power Club - Home{% endblock %}
+
+{% block content %}
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <!-- Left Sidebar -->
+    <div class="md:col-span-1">
+        <div class="bg-white rounded-lg shadow-md overflow-hidden mb-6">
+            <div class="bg-gradient-to-r from-ppg-pink to-ppg-purple p-4">
+                <h2 class="text-xl font-bold text-white">My Profile</h2>
+            </div>
+            <div class="p-4">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 bg-ppg-purple rounded-full flex items-center justify-center text-white font-bold text-xl mr-3">
+                        {{ request.user.username.0|upper }}
+                    </div>
+                    <div>
+                        <p class="font-bold text-gray-800">{{ request.user.username }}</p>
+                        <p class="text-gray-600 text-sm">{{ request.user.profile.school }}</p>
+                    </div>
+                </div>
+                <a href="{% url 'profile' %}" class="block w-full text-center bg-ppg-blue hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-200">
+                    View My Profile
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Main Content Area -->
+    <div class="md:col-span-2">
+        <!-- Create Post Form -->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden mb-6">
+            <div class="p-4">
+                <h3 class="font-bold text-gray-800 mb-2">Share Something</h3>
+                <form method="post" action="{% url 'create_post' %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        {{ post_form.content }}
+                    </div>
+                    <div class="text-right">
+                        <button type="submit" class="bg-ppg-pink hover:bg-pink-600 text-white font-bold py-2 px-6 rounded transition duration-200">
+                            Post
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Posts Feed -->
+        <div class="space-y-6">
+            {% if posts %}
+                {% for post in posts %}
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="p-4 border-b">
+                            <div class="flex items-center mb-2">
+                                <div class="w-10 h-10 bg-ppg-purple rounded-full flex items-center justify-center text-white font-bold text-lg mr-3">
+                                    {{ post.user.username.0|upper }}
+                                </div>
+                                <div>
+                                    <p class="font-bold text-gray-800">{{ post.user.username }}</p>
+                                    <p class="text-gray-500 text-xs">{{ post.created_at|date:"F j, Y g:i a" }}</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-800">{{ post.content }}</p>
+                        </div>
+                        <div class="bg-gray-50 p-3 border-t flex justify-between items-center">
+                            <a href="{% url 'post_detail' post.id %}" class="text-ppg-purple hover:text-purple-700">
+                                {{ post.comments.count }} Comment{{ post.comments.count|pluralize }}
+                            </a>
+                            {% if post.user == request.user or request.user.is_staff %}
+                                <a href="{% url 'delete_post' post.id %}" class="text-red-500 hover:text-red-700 text-sm">
+                                    Delete
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="bg-white rounded-lg shadow-md p-6 text-center">
+                    <p class="text-gray-700">No posts yet! Be the first to share something.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

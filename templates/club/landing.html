@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}Girl Power Club - Welcome!{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <div class="bg-white rounded-lg shadow-md overflow-hidden mb-8">
+        <div class="flex flex-col md:flex-row">
+            <div class="w-full md:w-1/2 p-6 flex flex-col justify-center">
+                <h2 class="text-3xl font-bold text-ppg-purple mb-4">Welcome to the Girl Power Club!</h2>
+                <p class="text-gray-700 mb-6">A social club for elementary school girls in Singapore to connect, share experiences, and empower each other.</p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="{% url 'join' %}" class="bg-ppg-pink hover:bg-pink-600 text-white font-bold py-2 px-6 rounded text-center transition duration-200">
+                        Join the Club
+                    </a>
+                    <a href="{% url 'login' %}" class="bg-ppg-blue hover:bg-blue-600 text-white font-bold py-2 px-6 rounded text-center transition duration-200">
+                        Login
+                    </a>
+                </div>
+            </div>
+            <div class="w-full md:w-1/2 bg-gradient-to-br from-ppg-pink via-ppg-blue to-ppg-green p-6 flex items-center justify-center">
+                <img src="/static/club/images/logo.png" alt="Girl Power Club Logo" class="h-64">
+            </div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-ppg-pink">
+            <h3 class="text-xl font-bold mb-3 text-ppg-pink">Connect</h3>
+            <p class="text-gray-700">Meet other girls from elementary schools across Singapore and build lasting friendships.</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-ppg-blue">
+            <h3 class="text-xl font-bold mb-3 text-ppg-blue">Share</h3>
+            <p class="text-gray-700">Share your school experiences, projects, achievements, and challenges with peers who understand.</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-ppg-green">
+            <h3 class="text-xl font-bold mb-3 text-ppg-green">Empower</h3>
+            <p class="text-gray-700">Build confidence, develop leadership skills, and support each other to reach your full potential.</p>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <div class="p-6">
+            <h2 class="text-2xl font-bold text-ppg-purple mb-4">How it Works</h2>
+            <ol class="space-y-4 text-gray-700">
+                <li class="flex items-start">
+                    <div class="bg-ppg-pink text-white w-8 h-8 rounded-full flex items-center justify-center mr-3 flex-shrink-0">1</div>
+                    <div>
+                        <p class="font-semibold">Join the Club</p>
+                        <p>Submit your application with your name, school, and class information.</p>
+                    </div>
+                </li>
+                <li class="flex items-start">
+                    <div class="bg-ppg-blue text-white w-8 h-8 rounded-full flex items-center justify-center mr-3 flex-shrink-0">2</div>
+                    <div>
+                        <p class="font-semibold">Get Approved</p>
+                        <p>Our administrators will review your application and provide you with login credentials.</p>
+                    </div>
+                </li>
+                <li class="flex items-start">
+                    <div class="bg-ppg-green text-white w-8 h-8 rounded-full flex items-center justify-center mr-3 flex-shrink-0">3</div>
+                    <div>
+                        <p class="font-semibold">Connect & Share</p>
+                        <p>Create posts, comment on others' posts, and connect with girls from different schools!</p>
+                    </div>
+                </li>
+            </ol>
+        </div>
+    </div>
+</div>
+{% endblock %}

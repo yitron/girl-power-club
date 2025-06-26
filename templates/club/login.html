@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Login | Girl Power Club{% endblock %}
+
+{% block content %}
+<div class="max-w-md mx-auto">
+    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <div class="bg-gradient-to-r from-ppg-blue to-ppg-purple p-4">
+            <h2 class="text-2xl font-bold text-white">Login to Your Account</h2>
+        </div>
+        <div class="p-6">
+            <form method="post" class="space-y-4">
+                {% csrf_token %}
+                
+                <div class="space-y-2">
+                    <label for="{{ form.username.id_for_label }}" class="block text-gray-700 font-medium">Username</label>
+                    {{ form.username }}
+                    {% if form.username.errors %}
+                        <p class="text-red-500 text-sm">{{ form.username.errors.0 }}</p>
+                    {% endif %}
+                </div>
+                
+                <div class="space-y-2">
+                    <label for="{{ form.password.id_for_label }}" class="block text-gray-700 font-medium">Password</label>
+                    {{ form.password }}
+                    {% if form.password.errors %}
+                        <p class="text-red-500 text-sm">{{ form.password.errors.0 }}</p>
+                    {% endif %}
+                </div>
+                
+                <button type="submit" class="w-full bg-ppg-pink hover:bg-pink-600 text-white font-bold py-2 px-4 rounded transition duration-200">
+                    Login
+                </button>
+            </form>
+            
+            <div class="mt-6 text-center">
+                <p class="text-gray-600">Not a member yet? <a href="{% url 'join' %}" class="text-ppg-purple hover:underline">Apply to join</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

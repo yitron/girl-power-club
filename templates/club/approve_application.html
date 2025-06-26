@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block title %}Approve Application | Girl Power Club Admin{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto">
+    <div class="bg-white rounded-lg shadow-md overflow-hidden mb-6">
+        <div class="bg-gradient-to-r from-ppg-green to-ppg-blue p-4">
+            <h2 class="text-2xl font-bold text-white">Approve Membership Application</h2>
+        </div>
+        <div class="p-6">
+            <div class="bg-gray-50 p-4 rounded-lg mb-6">
+                <h3 class="font-bold text-gray-800 mb-3">Application Details</h3>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <p class="text-gray-600 text-sm">Name:</p>
+                        <p class="text-gray-800 font-medium">{{ application.name }}</p>
+                    </div>
+                    <div>
+                        <p class="text-gray-600 text-sm">Application Date:</p>
+                        <p class="text-gray-800 font-medium">{{ application.application_date|date:"F j, Y" }}</p>
+                    </div>
+                    <div>
+                        <p class="text-gray-600 text-sm">School:</p>
+                        <p class="text-gray-800 font-medium">{{ application.school }}</p>
+                    </div>
+                    <div>
+                        <p class="text-gray-600 text-sm">Class:</p>
+                        <p class="text-gray-800 font-medium">{{ application.classroom }}</p>
+                    </div>
+                </div>
+            </div>
+            
+            <form method="post" class="space-y-4">
+                {% csrf_token %}
+                <h3 class="font-bold text-gray-800 mb-2">Create Account for Member</h3>
+                <p class="text-gray-600 mb-4">Enter a username and password for this member. These credentials will be provided to them for logging in.</p>
+                
+                <div class="space-y-2">
+                    <label for="{{ form.username.id_for_label }}" class="block text-gray-700 font-medium">Username</label>
+                    {{ form.username }}
+                    {% if form.username.errors %}
+                        <p class="text-red-500 text-sm">{{ form.username.errors.0 }}</p>
+                    {% endif %}
+                    <p class="text-gray-500 text-xs">Choose a username that is easy to remember and related to the member's name.</p>
+                </div>
+                
+                <div class="space-y-2">
+                    <label for="{{ form.password.id_for_label }}" class="block text-gray-700 font-medium">Password</label>
+                    {{ form.password }}
+                    {% if form.password.errors %}
+                        <p class="text-red-500 text-sm">{{ form.password.errors.0 }}</p>
+                    {% endif %}
+                    <p class="text-gray-500 text-xs">Choose a secure but easy-to-remember password.</p>
+                </div>
+                
+                <div class="flex justify-between pt-4">
+                    <a href="{% url 'admin_applications' %}" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded transition duration-200">
+                        Cancel
+                    </a>
+                    
+                    <button type="submit" class="bg-ppg-green hover:bg-green-600 text-white font-bold py-2 px-4 rounded transition duration-200">
+                        Approve & Create Account
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
