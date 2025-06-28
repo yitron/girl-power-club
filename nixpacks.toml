@@ -1,5 +1,5 @@
 [build]
-languages = "python"
+languages = ["python", "nodejs"]
 
 [phases.build]
 cmds = [
